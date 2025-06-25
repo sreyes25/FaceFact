@@ -1,0 +1,17 @@
+//
+//  FaceFactApp.swift
+//  FaceFact
+//
+//  Created by Sergio Reyes on 6/25/25.
+//
+
+import SwiftUI
+
+@main
+struct FaceFactApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}
