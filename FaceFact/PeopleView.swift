@@ -13,7 +13,24 @@ struct PeopleView: View {
     @Query var people: [Person]
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        List{
+            ForEach(people) { person in
+                NavigationLink(value: person){
+                    Text(person.name)
+                }
+            }
+            .onDelete(perform: deletePerson)
+        }
+    }
+    
+    init(searchString: String = "") {
+        _people = Query(filter: #Predicate { person in
+            if searchString.isEmpty {
+                true
+            } else{
+                person.name.localizedStandardContains(searchString)
+            }
+        })
     }
     
     func deletePerson(at offsets: IndexSet) {

@@ -8,29 +8,23 @@ import SwiftData
 import SwiftUI
 
 struct ContentView: View {
-                
+    @Environment(\.modelContext) var modelContext
     @State private var path = [Person]()
+    
     @State private var serachText: String = ""
     
     
     var body: some View {
         NavigationStack(path: $path){
-            List{
-                ForEach(people) { person in
-                    NavigationLink(value: person){
-                        Text(person.name)
-                    }
+            PeopleView(searchString: serachText)
+                .navigationTitle("Face Facts")
+                .navigationDestination(for: Person.self) { person in
+                    EditPersonView(person: person)
                 }
-                .onDelete(perform: deletePerson)
-            }
-            .navigationTitle("Face Facts")
-            .navigationDestination(for: Person.self) { person in
-                EditPersonView(person: person)
-            }
-            .toolbar {
-                Button("Add Person", systemImage: "plus", action: addPerson)
-            }
-            .searchable(text: $serachText)
+                .toolbar {
+                    Button("Add Person", systemImage: "plus", action: addPerson)
+                }
+                .searchable(text: $serachText)
             
         }
     }
